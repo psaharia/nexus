@@ -18,12 +18,14 @@
 #include <G4OpticalPhoton.hh>
 #include <G4OpBoundaryProcess.hh>
 #include <G4VPhysicalVolume.hh>
+#include <G4SystemOfUnits.hh>
 
 using namespace nexus;
 
 REGISTER_CLASS(AnalysisSteppingAction, G4UserSteppingAction)
 
-AnalysisSteppingAction::AnalysisSteppingAction(): G4UserSteppingAction()
+AnalysisSteppingAction::AnalysisSteppingAction(): G4UserSteppingAction(),
+fWlsReemissionCount(0)
 {
 }
 
@@ -39,6 +41,19 @@ AnalysisSteppingAction::~AnalysisSteppingAction()
     it ++;
   }
   G4cout << "TOTAL COUNTS: " << total_counts << G4endl;
+  /*
+  //print the average track length 
+  if (track_lengths_.size() > 0) {
+    G4double sum_of_lengths = 0;
+    for (G4double length : track_lengths_) {
+      sum_of_lengths += length;
+    }
+    G4double average_length = sum_of_lengths / track_lengths_.size();
+    G4cout << "Average Track Length: " << average_length / mm << " mm" << G4endl;
+  }*/
+  G4cout << "\n--------------------------------------------------" << G4endl;
+  G4cout << "TOTAL WLS RE-EMITTED PHOTONS: " << fWlsReemissionCount << G4endl;
+  G4cout << "--------------------------------------------------" << G4endl;
 }
 
 
@@ -46,6 +61,33 @@ AnalysisSteppingAction::~AnalysisSteppingAction()
 void AnalysisSteppingAction::UserSteppingAction(const G4Step* step)
 {
   G4ParticleDefinition* pdef = step->GetTrack()->GetDefinition();
+  G4Track* track = step->GetTrack();
+
+  const G4TrackVector* secondary = step->GetSecondary();
+  if (secondary) {
+      for (size_t i = 0; i < secondary->size(); ++i) {
+          G4Track* sec_track = (*secondary)[i];
+          const G4VProcess* creatorProcess = sec_track->GetCreatorProcess();
+          //G4cout<<"creator process check" << creatorProcess << G4endl;
+
+          // Check if the created particle is an optical photon AND its creator was WLS
+          if (sec_track->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition() &&
+              //creatorProcess && creatorProcess->GetProcessName() == "initStep" && 
+              sec_track->GetParentID()>1)
+          {
+              fWlsReemissionCount++; // Increment the counter
+          }
+      }
+  }
+  /*
+  if (track->GetTrackStatus() == fStopAndKill) {
+    G4double final_track_length = track->GetTrackLength();
+    //store this for further analysis
+    track_lengths_.push_back(final_track_length);
+    G4cout << "Track #" <<track->GetTrackID()
+           << " terminated. Final length: " << final_track_length/ mm << " mm"
+           << G4endl;
+  }*/
 
   //Check whether the track is an optical photon
   if (pdef != G4OpticalPhoton::Definition()) return;

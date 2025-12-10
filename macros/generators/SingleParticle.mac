@@ -6,7 +6,12 @@
 ## The NEXT Collaboration
 ## ----------------------------------------------------------------------------
 
-/Generator/SingleParticle/particle e-
-/Generator/SingleParticle/min_energy 1. MeV
-/Generator/SingleParticle/max_energy 2. MeV
-/Generator/SingleParticle/region CENTER
+/Generator/SingleParticle/particle opticalphoton
+/Generator/SingleParticle/min_energy 2.917 eV 
+/Generator/SingleParticle/max_energy 2.917 eV
+/Generator/SingleParticle/region OUTSIDE
+##/Generator/SingleParticle/position 0 0 5.5 cm   
+##/source/geometries/WlsPde/set_vertex_x 0.65 mm  
+##/source/geometries/CylindricChamber/set_fiber_radius 1.0 mm
+##/source/geometries/CylindricChamber/maxPhotonSteps 20000
+/Generator/SingleParticle/momentum -1 0 0

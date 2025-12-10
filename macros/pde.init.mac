@@ -1,0 +1,21 @@
+## ----------------------------------------------------------------------------
+## nexus | pde.init.mac
+##
+## Initialization macro to simulate the proof of principle of a photon detection efficiency for 
+## wavelength shifting fibres.
+##
+## The NEXT Collaboration
+## ----------------------------------------------------------------------------
+
+/control/execute macros/physics/DefaultPhysicsList.mac
+
+/nexus/RegisterGeometry WlsPde
+
+/nexus/RegisterGenerator SingleParticleGenerator
+/nexus/RegisterSteppingAction AnalysisSteppingAction
+
+/nexus/RegisterPersistencyManager PersistencyManager
+
+/nexus/RegisterTrackingAction DefaultTrackingAction
+
+/nexus/RegisterMacro macros/pde.config.mac

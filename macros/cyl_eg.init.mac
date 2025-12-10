@@ -1,0 +1,23 @@
+## ----------------------------------------------------------------------------
+## nexus | cyl_eg.init.mac
+##
+## Initialization macro to simulate individual particles
+## in a cylindrical chamber.
+##
+## The NEXT Collaboration
+## ----------------------------------------------------------------------------
+
+/control/execute macros/physics/DefaultPhysicsList.mac
+
+/nexus/RegisterGeometry CylindricChamber
+
+/nexus/RegisterGenerator SingleParticleGenerator
+
+/nexus/RegisterPersistencyManager PersistencyManager
+##/nexus/RegisterSteppingAction AnalysisSteppingAction
+
+##/nexus/RegisterRunAction DefaultRunAction
+##/nexus/RegisterEventAction DefaultEventAction
+/nexus/RegisterTrackingAction DefaultTrackingAction
+
+/nexus/RegisterMacro macros/cyl_eg.config.mac

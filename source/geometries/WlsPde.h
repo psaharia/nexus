@@ -1,13 +1,13 @@
 // ----------------------------------------------------------------------------
-// nexus | CylindricChamber.h
+// nexus | WLSpde.h
 //
-// General-purpose cylindric chamber.
+// WLS fibre photon detection efficiency simulation.
 //
 // The NEXT Collaboration
 // ----------------------------------------------------------------------------
 
-#ifndef CYLINDRIC_CHAMBER_H
-#define CYLINDRIC_CHAMBER_H
+#ifndef WLS_PDE_H
+#define WLS_PDE_H
 
 #include "GeometryBase.h"
 #include "G4ThreeVector.hh"
@@ -19,36 +19,27 @@ namespace nexus {
 
     class GenericPhotosensor;
     class GenericWLSFiber;
-    class CylindricChamber: public GeometryBase
+    class WlsPde: public GeometryBase
     
   {
   public:
     /// Constructor
-    CylindricChamber();
+    WlsPde();
     /// Destructor
-    ~CylindricChamber();
+    ~WlsPde();
 
     /// Return vertex within region <region> of the chamber
     virtual G4ThreeVector GenerateVertex(const G4String& region) const;
 
     virtual void Construct();
-
-    void SetVertexZ(G4double z);
-
-    void SetFiberRadius(G4double radius); 
-
-    void SetMaxPhotonSteps(G4int steps);
+    //void SetVertexX(G4double x);
 
   private:
     /// Messenger for the definition of control commands
     G4GenericMessenger* msg_;
-    G4double fVertexZPosition;
-    G4double fFiberRadius;
     GenericPhotosensor* photosensor;
+    //G4double fVertexXPosition;
     GenericWLSFiber* wls_fiber;
-
-    G4UserLimits* fUserLimits_;
-    G4int fMaxPhotonSteps_; // Maximum number of steps for optical photons
   };
 
 } // end namespace nexus

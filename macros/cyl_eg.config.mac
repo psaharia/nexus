@@ -1,0 +1,22 @@
+## ----------------------------------------------------------------------------
+## nexus | cyl_eg.config.mac
+##
+## Configuration macro to simulate individual particles
+## in a cylindrical chamber.
+##
+## The NEXT Collaboration
+## ----------------------------------------------------------------------------
+
+/run/verbose 1
+/event/verbose 0
+/tracking/verbose 0
+
+/process/em/verbose 0
+
+## /control/execute macros/geometries/XeSphere.mac
+
+/control/execute macros/generators/SingleParticle.mac
+
+/control/execute macros/physics/IonizationElectron.mac
+
+/nexus/persistency/output_file outputs/TotalTrackLength_ex/trial.next

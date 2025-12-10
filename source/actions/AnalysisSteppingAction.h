@@ -15,8 +15,10 @@
 #include <G4UserSteppingAction.hh>
 #include <globals.hh>
 #include <map>
+#include <vector>
 
 class G4Step;
+
 
 
 namespace nexus {
@@ -36,6 +38,9 @@ namespace nexus {
   private:
     typedef std::map<G4String, int> detectorCounts;
     detectorCounts my_counts_;
+    std::vector<G4double> track_lengths_;
+    G4long fWlsReemissionCount; 
+    //DefaultEventAction* event_action_;
   };
 
 } // namespace nexus

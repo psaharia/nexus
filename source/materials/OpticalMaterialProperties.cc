@@ -1375,15 +1375,108 @@ namespace opticalprops {
     mpt->AddProperty("RINDEX", ri_energy, rIndex);
 
     // ABSORPTION LENGTH
-    std::vector<G4double> abs_energy = {
+    /*std::vector<G4double> abs_energy = {
       optPhotMinE_,
       hc_ / (750. * nm), hc_ / (740. * nm), hc_ / (380. * nm), hc_ / (370. * nm),
       optPhotMaxE_
+    };*/
+
+    std::vector<G4double> abs_energy = {
+      hc_ / (1010. * nm),
+      hc_ / (1000. * nm),
+      hc_ / (990. * nm),       hc_ / (980. * nm),
+      hc_ / (970. * nm),       hc_ / (960. * nm),
+      hc_ / (950. * nm),       hc_ / (940. * nm),
+      hc_ / (930. * nm),       hc_ / (920. * nm),
+      hc_ / (910. * nm),       hc_ / (900. * nm),
+      hc_ / (890. * nm),       hc_ / (880. * nm),
+      hc_ / (870. * nm),       hc_ / (860. * nm),
+      hc_ / (850. * nm),       hc_ / (840. * nm),
+      hc_ / (830. * nm),       hc_ / (820. * nm),
+      hc_ / (810. * nm),       hc_ / (800. * nm),
+      hc_ / (790. * nm),       hc_ / (780. * nm),
+      hc_ / (770. * nm),       hc_ / (760. * nm),
+      hc_ / (750. * nm),       hc_ / (740. * nm),
+      hc_ / (730. * nm),       hc_ / (720. * nm),
+      hc_ / (710. * nm),       hc_ / (700. * nm),
+      hc_ / (690. * nm),       hc_ / (680. * nm),
+      hc_ / (670. * nm),       hc_ / (660. * nm),
+      hc_ / (650. * nm),       hc_ / (640. * nm),
+      hc_ / (630. * nm),       hc_ / (620. * nm),
+      hc_ / (610. * nm),       hc_ / (600. * nm),
+      hc_ / (590. * nm),       hc_ / (580. * nm),
+      hc_ / (570. * nm),       hc_ / (560. * nm),
+      hc_ / (550. * nm),       hc_ / (540. * nm),
+      hc_ / (530. * nm),       hc_ / (520. * nm),
+      hc_ / (510. * nm),       hc_ / (500. * nm),
+      hc_ / (490. * nm),       hc_ / (480. * nm),
+      hc_ / (470. * nm),       hc_ / (460. * nm),
+      hc_ / (450. * nm),       hc_ / (440. * nm),
+      hc_ / (430. * nm),       hc_ / (420. * nm),
+      hc_ / (410. * nm),       hc_ / (400. * nm),
+      hc_ / (390. * nm),       hc_ / (380. * nm),
+      hc_ / (370. * nm),       hc_ / (360. * nm),
+      hc_ / (350. * nm),       hc_ / (340. * nm),
+      hc_ / (330. * nm),       hc_ / (320. * nm),
+      hc_ / (310. * nm),       hc_ / (300. * nm),
+      hc_ / (290. * nm),       hc_ / (280. * nm),
+      hc_ / (270. * nm),       hc_ / (260. * nm),
+      hc_ / (250. * nm),       hc_ / (240. * nm),
+      hc_ / (230. * nm),       hc_ / (220. * nm),
+      hc_ / (210. * nm),       hc_ / (200. * nm),
+      hc_ / (192. * nm)
     };
+
+    /* 
     std::vector<G4double> absLength = {
       noAbsLength_,
-      noAbsLength_, 3.5 * m, 3.5 * m, noAbsLength_,
+      noAbsLength_, 704 * mm, 704 * mm, noAbsLength_, //originally 3.5m from datasheet
       noAbsLength_
+    };*/
+
+    std::vector<G4double> absLength = {
+      2277.3099199774592 * mm,
+      2745.2862108775307 * mm, 2163.3635017863553 * mm,
+      3051.1784805378893 * mm, 1869.262937939074 * mm,
+      3321.754637250804 * mm, 3070.1152794177706 * mm,
+      2972.564440953326 * mm, 1513.6719573348946 * mm,
+      3189.559399188497 * mm, 2880.75479038698 * mm,
+      3566.518566062918 * mm, 3028.0781461612 * mm,
+      4558.604122463354 * mm, 2929.866055618017 * mm,
+      3370.3363715312203 * mm, 2331.7911088115547 * mm,
+      2804.9431621351655 * mm, 2879.8418355892695 * mm,
+      4381.61312467135 * mm, 4580.509054889573 * mm,
+      5770.285387399466 * mm, 6397.716212878746 * mm,
+      7146.998940097912 * mm, 6096.910344342358 * mm,
+      4020.422991004945 * mm, 6166.351349693851 * mm,
+      10201.684976791928 * mm, 8476.77634996751 * mm,
+      2023.0219218309599 * mm, 2660.1762521649293 * mm,
+      9378.14250526738 * mm, 15785.422304299542 * mm,
+      20486.518739221025 * mm, 21186.298865746714 * mm,
+      18221.35118299583 * mm, 14387.345310564637 * mm,
+      16157.617098147242 * mm, 18123.554703719758 * mm,
+      17158.167716984746 * mm, 7662.138297555104 * mm,
+      12839.954236465956 * mm, 15794.10576440826 * mm,
+      15240.302297015356 * mm, 13561.580470943716 * mm,
+      12537.030701962323 * mm, 11031.250656210052 * mm,
+      8856.714745697065 * mm, 6348.690883830841 * mm,
+      4897.934010894369 * mm, 2398.1411152317346 * mm,
+      704.4915230537741 * mm, 205.67265477480788 * mm,
+      80.61844782686282 * mm, 903.8365359827451 * mm,
+      1583.8915970221428 * mm, 2315.280945600996 * mm,
+      2534.8889673862122 * mm, 2085.9450415983183 * mm,
+      2542.142604759967 * mm, 2685.604201201546 * mm,
+      2475.938586436805 * mm, 2765.3660321251423 * mm,
+      1920.7614126940132 * mm, 2529.242504304562 * mm,
+      2187.5544166445716 * mm, 2534.9626068570274 * mm,
+      1899.2952039664503 * mm, 2192.870562306919 * mm,
+      2701.912546106188 * mm, 1550.8805715911067 * mm,
+      1311.7075689043652 * mm, 1493.873033370506 * mm,
+      1369.9662964904032 * mm, 1568.3877804610763 * mm,
+      1764.1657088972565 * mm, 1673.770584703174 * mm,
+      1898.1688191389587 * mm, 2754.236510681744 * mm,
+      3419.219757443677 * mm, 3694.5167955329284 * mm,
+      3328.1124120686477 * mm, 3065.978270549977 * mm
     };
     mpt->AddProperty("ABSLENGTH", abs_energy, absLength);
 
@@ -1443,7 +1536,218 @@ namespace opticalprops {
     return mpt;
   }
 
+  G4MaterialPropertiesTable* BCF91A()
+  {
+    
+    G4MaterialPropertiesTable* mpt = new G4MaterialPropertiesTable();
 
+    // REFRACTIVE INDEX
+    std::vector<G4double> ri_energy = {
+      optPhotMinE_,  optPhotMaxE_
+    };
+    std::vector<G4double> rIndex = {
+      1.59,  1.59
+    };
+    mpt->AddProperty("RINDEX", ri_energy, rIndex);
+
+    // ABSORPTION LENGTH
+    std::vector<G4double> abs_energy = {
+      optPhotMinE_,
+      hc_ / (750. * nm), hc_ / (740. * nm), hc_ / (380. * nm), hc_ / (370. * nm),
+      optPhotMaxE_
+    };
+    std::vector<G4double> absLength = {
+      noAbsLength_,
+      noAbsLength_, 1350 * mm, 1350 * mm, noAbsLength_,  //originally 4m from Luxium datasheet 
+      noAbsLength_
+    };
+    mpt->AddProperty("ABSLENGTH", abs_energy, absLength);
+
+    // WLS ABSORPTION LENGTH
+    std::vector<G4double> WLS_abs_energy = {
+      optPhotMinE_,
+      hc_ / (475. * nm), hc_ / (470. * nm), hc_ / (465. * nm), hc_ / (450. * nm),
+      hc_ / (440. * nm), hc_ / (430. * nm), hc_ / (410. * nm), hc_ / (405. * nm),
+      hc_ / (360. * nm), hc_ / (350. * nm), hc_ / (345. * nm),
+      optPhotMaxE_
+    };
+    std::vector<G4double> WLS_absLength = {
+      noAbsLength_,
+      noAbsLength_, 6.579 * mm, 1.416 * mm, 0.397 * mm, // 475, 470, 465, 450 nm
+      0.470 * mm, 0.347 * mm, 0.551 * mm, 0.576 * mm, // 440, 430, 410, 405 nm
+      1.104 * mm,  1.798  * mm, noAbsLength_,           // 360, 350, 345  nm
+      noAbsLength_
+    };
+    mpt->AddProperty("WLSABSLENGTH", WLS_abs_energy, WLS_absLength);
+    
+    // WLS EMISSION SPECTRUM
+    std::vector<G4double> WLS_emi_energy = {
+      optPhotMinE_,
+      hc_ / (595. * nm), hc_ / (525. * nm), hc_ / (509. * nm),
+      hc_ / (499. * nm), hc_ / (480. * nm), hc_ / (475. * nm),
+      hc_ / (470. * nm), hc_ / (465. * nm), hc_ / (462. * nm),
+      hc_ / (457. *nm), 
+      optPhotMaxE_
+    };
+
+    std::vector<G4double> WLS_emiSpectrum = {
+      0.000,
+      0.000, 0.319, 0.479, // 595, 525, 509 nm
+      0.764, 0.865, 0.693, // 499, 480, 475 nm
+      0.510, 0.232, 0.085, // 470, 465, 462 nm
+      0.000, // 457 nm
+      0.000
+    };
+    mpt->AddProperty("WLSCOMPONENT",  WLS_emi_energy, WLS_emiSpectrum);
+
+    // WLS Delay
+    mpt->AddConstProperty("WLSTIMECONSTANT", 12 * ns);
+
+    // WLS Quantum Efficiency
+    mpt->AddConstProperty("WLSMEANNUMBERPHOTONS", 0.87);
+
+    return mpt;
+  }
+
+  G4MaterialPropertiesTable* BCF92()
+  {
+    
+    G4MaterialPropertiesTable* mpt = new G4MaterialPropertiesTable();
+
+    // REFRACTIVE INDEX
+    std::vector<G4double> ri_energy = {
+      optPhotMinE_,  optPhotMaxE_
+    };
+    std::vector<G4double> rIndex = {
+      1.59,  1.59
+    };
+    mpt->AddProperty("RINDEX", ri_energy, rIndex);
+
+    // ABSORPTION LENGTH
+    std::vector<G4double> abs_energy = {
+      optPhotMinE_,
+      hc_ / (750. * nm), hc_ / (740. * nm), hc_ / (380. * nm), hc_ / (370. * nm),
+      optPhotMaxE_
+    };
+    std::vector<G4double> absLength = {
+      noAbsLength_,
+      noAbsLength_, 1590 * mm, 1590 * mm, noAbsLength_,  //originally 4m from Luxium datasheet 
+      noAbsLength_
+    }; //change according to the objective of the simulation
+    mpt->AddProperty("ABSLENGTH", abs_energy, absLength);
+
+    // WLS ABSORPTION LENGTH
+    std::vector<G4double> WLS_abs_energy = {
+      optPhotMinE_,
+      hc_ / (475. * nm), hc_ / (465. * nm), hc_ / (455. * nm), hc_ / (450. * nm),
+      hc_ / (440. * nm), hc_ / (430. * nm), hc_ / (410. * nm), hc_ / (405. * nm),
+      hc_ / (360. * nm), hc_ / (350. * nm), hc_ / (345. * nm),
+      optPhotMaxE_
+    };
+    std::vector<G4double> WLS_absLength = {
+      noAbsLength_,
+      noAbsLength_, 6.579 * mm, 3.973 * mm, 2.036 * mm, // 475, 465, 455, 450 nm
+      0.862 * mm, 0.554 * mm, 0.386 * mm, 0.375 * mm, // 440, 430, 410, 405 nm
+      1.502 * mm,  0.339  * mm, noAbsLength_,           // 360, 350, 345  nm
+      noAbsLength_
+    };
+    mpt->AddProperty("WLSABSLENGTH", WLS_abs_energy, WLS_absLength);
+
+    // WLS EMISSION SPECTRUM
+    std::vector<G4double> WLS_emi_energy = {
+      optPhotMinE_,
+      hc_ / (595. * nm), hc_ / (560. * nm), hc_ / (545. * nm),
+      hc_ / (528. * nm), hc_ / (503. * nm), hc_ / (495. * nm),
+      hc_ / (480. * nm), hc_ / (476. * nm), hc_ / (470. * nm),
+      hc_ / (465. *nm), 
+      optPhotMaxE_
+    };
+
+    std::vector<G4double> WLS_emiSpectrum = {
+      0.000,
+      0.000, 0.187, 0.300, // 595, 560, 545 nm
+      0.515, 0.935, 0.983, // 528, 503, 495 nm
+      0.839, 0.408, 0.119, // 480, 476, 470 nm
+      0.000, // 465 nm
+      0.000
+    };
+    mpt->AddProperty("WLSCOMPONENT",  WLS_emi_energy, WLS_emiSpectrum);
+
+    // WLS Delay
+    mpt->AddConstProperty("WLSTIMECONSTANT", 2.7 * ns);
+
+    // WLS Quantum Efficiency
+    mpt->AddConstProperty("WLSMEANNUMBERPHOTONS", 0.87);
+
+    return mpt;
+  }
+
+  G4MaterialPropertiesTable* SpecFibre()
+  {
+    G4MaterialPropertiesTable* mpt = new G4MaterialPropertiesTable();
+
+    // set refractive index
+    std::vector<G4double> ri_energy = {
+      optPhotMinE_, optPhotMaxE_
+    };
+    std::vector<G4double> rIndex = {
+      1.46, 1.46
+    };
+    mpt->AddProperty("RINDEX", ri_energy, rIndex);
+
+    // ABSORPTION LENGTH
+
+    std::vector<G4double> abs_energy;
+    std::vector<G4double> absLength;
+
+    abs_energy.push_back(optPhotMinE_);
+    absLength.push_back(noAbsLength_);
+
+    abs_energy.push_back(hc_ / (190. * nm));
+    absLength.push_back(noAbsLength_);
+
+    std::ifstream file("/Users/psaharia/Pokhee-IFIC/FibreAnal/spec_fibre_attlen.csv");
+    if (!file) {
+        G4cerr << "Error: Could not open file" << G4endl;
+        return mpt;
+    }
+
+    std::string line;
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
+        G4double wavelength, attenuation_db_per_km;
+        char comma;
+        
+        if (ss >> wavelength >> comma >> attenuation_db_per_km) {
+            G4double energy = hc_ / (wavelength * nm);
+            
+            // Convert dB/km to absorption length in meters
+            G4double attenuation_coeff = attenuation_db_per_km * (1. / km);
+            G4double abs_length = 1000. / (attenuation_coeff * std::log(10));
+
+            abs_energy.push_back(energy);
+            absLength.push_back(abs_length);
+        }
+    }
+
+    file.close();
+
+    abs_energy.push_back(hc_ / (2210. * nm));
+    absLength.push_back(noAbsLength_);
+
+    abs_energy.push_back(optPhotMaxE_);
+    absLength.push_back(noAbsLength_);
+
+    if (!abs_energy.empty() && !absLength.empty()) {
+        mpt->AddProperty("ABSLENGTH", abs_energy, absLength);
+    } else {
+        G4cerr << "Warning: No data loaded for absorption length!" << G4endl;
+    }
+
+    return mpt;
+
+    
+  }
 
   G4MaterialPropertiesTable* B2()
   {

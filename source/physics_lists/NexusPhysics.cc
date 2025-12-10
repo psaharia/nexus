@@ -135,6 +135,18 @@ namespace nexus {
         }
       }
     }
+
+    // add step limiter to G4OpticalPhoton
+    G4ParticleDefinition* opticalPhoton = G4OpticalPhoton::Definition();
+    G4ProcessManager* opticalPhotonManager = opticalPhoton->GetProcessManager();
+
+    if (!opticalPhotonManager) {
+      G4Exception("[NexusPhysics]", "ConstructProcess()", FatalException,
+        "G4OpticalPhoton without a process manager. Cannot add G4StepLimiter.");
+    }
+
+    G4StepLimiter* stepLimiter = new G4StepLimiter();
+    opticalPhotonManager->AddDiscreteProcess(stepLimiter);
   }
 
 } // end namespace nexus

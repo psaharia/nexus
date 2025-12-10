@@ -21,23 +21,36 @@
 #include <G4Trajectory.hh>
 #include <G4ParticleDefinition.hh>
 #include <G4OpticalPhoton.hh>
+#include <fstream>
+#include <G4SystemOfUnits.hh>
 
 using namespace nexus;
 
 REGISTER_CLASS(DefaultTrackingAction, G4UserTrackingAction)
 
+//write the output to a text file
+static std::ofstream outputfile("/Users/psaharia/Pokhee-IFIC/Installs/nexus/outputs/PDE_comp/eff_conv_PDE_thickcheck.txt");
+
 DefaultTrackingAction::DefaultTrackingAction() : G4UserTrackingAction()
 {
+  if (outputfile.is_open()){
+    outputfile << "WLS conversion" << std::endl;
+  }
+
 }
 
 DefaultTrackingAction::~DefaultTrackingAction()
 {
+  if (outputfile.is_open()){
+    outputfile.close();
+  }
+  
 }
 
 void DefaultTrackingAction::PreUserTrackingAction(const G4Track *track)
 {
   // Do nothing if the track is an optical photon or an ionization electron
-  if (track->GetDefinition() == G4OpticalPhoton::Definition() ||
+  if (//track->GetDefinition() == G4OpticalPhoton::Definition() ||
       track->GetDefinition() == IonizationElectron::Definition())
   {
     fpTrackingManager->SetStoreTrajectory(false);
@@ -59,9 +72,20 @@ void DefaultTrackingAction::PreUserTrackingAction(const G4Track *track)
 void DefaultTrackingAction::PostUserTrackingAction(const G4Track *track)
 {
   // Do nothing if the track is an optical photon or an ionization electron
-  if (track->GetDefinition() == G4OpticalPhoton::Definition() ||
-      track->GetDefinition() == IonizationElectron::Definition())
+  //if (//track->GetDefinition() == G4OpticalPhoton::Definition() ||
+    //  track->GetDefinition() == IonizationElectron::Definition())
+    //return;
+  if (track->GetDefinition() != G4OpticalPhoton::Definition())
     return;
+
+  //Get the process that ended the track
+  G4String proc_name = track->GetStep()->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName();
+  //check for WLS absorption
+  if (proc_name == "OpWLS"){
+    //write a specific marker and info for a WLS conversion event
+    outputfile << track->GetTrackID() << std::endl;
+  }
+  return;
 
   Trajectory *trj = (Trajectory *)TrajectoryMap::Get(track->GetTrackID());
 
@@ -76,6 +100,15 @@ void DefaultTrackingAction::PostUserTrackingAction(const G4Track *track)
   trj->SetFinalMomentum(track->GetMomentum());
 
   // Record last process of the track
-  G4String proc_name = track->GetStep()->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName();
-  trj->SetFinalProcess(proc_name);
+  //G4String proc_name = track->GetStep()->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName();
+  //trj->SetFinalProcess(proc_name);
+
+  //G4String next_volume = track->GetStep()->GetPostStepPoint()->GetPhysicalVolume()->GetName();
+
+  //if (proc_name == "Transportation" && next_volume == "photosensor_SENSAREA") {
+  //outputfile << track->GetTrackLength() / mm << std::endl;
+  //}
+
+  
 }
+
