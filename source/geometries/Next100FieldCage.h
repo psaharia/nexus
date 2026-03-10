@@ -70,6 +70,9 @@ namespace nexus {
     G4double drift_transv_diff_, drift_long_diff_;
     G4double ELtransv_diff_; ///< transversal diffusion in the EL gap
     G4double ELlong_diff_; ///< longitudinal diffusion in the EL gap
+    // Drift Velocities
+    G4double drift_v_;
+    G4double EL_drift_v_;
     // Electric field
     G4bool elfield_;
     G4double ELelectric_field_; ///< electric field in the EL region
@@ -109,6 +112,7 @@ namespace nexus {
     CylinderPointSampler* hdpe_gen_;
     CylinderPointSampler* ring_gen_;
     CylinderPointSampler* cathode_gen_;
+    CylinderPointSampler* cathode_surf_gen_;
     CylinderPointSampler* gate_gen_;
     CylinderPointSampler* anode_gen_;
     CylinderPointSampler* holder_gen_;

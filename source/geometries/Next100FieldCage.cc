@@ -92,13 +92,16 @@ Next100FieldCage::Next100FieldCage(G4double grid_thickn):
   num_drift_rings_ (48),
   num_buffer_rings_ (4),
 
-  tpb_thickn_ (1 * micrometer),
+  tpb_thickn_ (3.5 * micrometer),
   overlap_    (0.001*mm), //defined for G4UnionSolids to ensure a common volume within the two joined solids
   // Diffusion constants
   drift_transv_diff_ (1. * mm/sqrt(cm)),
   drift_long_diff_ (.3 * mm/sqrt(cm)),
   ELtransv_diff_ (0. * mm/sqrt(cm)),
   ELlong_diff_ (0. * mm/sqrt(cm)),
+  // Drift velocities
+  drift_v_(1. * mm/microsecond),
+  EL_drift_v_(2.5 * mm/microsecond),
   // EL electric field
   elfield_ (0),
   ELelectric_field_ (34.5*kilovolt/cm),
@@ -117,6 +120,7 @@ Next100FieldCage::Next100FieldCage(G4double grid_thickn):
   /// Define new categories
   new G4UnitDefinition("kilovolt/cm","kV/cm","Electric field", kilovolt/cm);
   new G4UnitDefinition("mm/sqrt(cm)","mm/sqrt(cm)","Diffusion", mm/sqrt(cm));
+  new G4UnitDefinition("mm/microsecond","mm/microsecond","drift velocity", mm/microsecond);
 
   /// Initializing the geometry navigator (used in vertex generation)
   geom_navigator_ =
@@ -154,6 +158,20 @@ Next100FieldCage::Next100FieldCage(G4double grid_thickn):
                         "Longitudinal diffusion in the EL region");
   ELlong_diff_cmd.SetParameterName("ELlong_diff", true);
   ELlong_diff_cmd.SetUnitCategory("Diffusion");
+
+  G4GenericMessenger::Command&  drift_vel_cmd =
+  msg_->DeclareProperty("drift_v", drift_v_,
+                        "The active volume drift velocity");
+  drift_vel_cmd.SetParameterName("drift_v", true);
+  drift_vel_cmd.SetRange("drift_v>=0.");
+  drift_vel_cmd.SetUnitCategory("drift velocity");
+
+  G4GenericMessenger::Command&  EL_drift_vel_cmd =
+  msg_->DeclareProperty("EL_drift_v", EL_drift_v_,
+                        "The EL region drift velocity");
+  EL_drift_vel_cmd.SetParameterName("EL_drift_v", true);
+  EL_drift_vel_cmd.SetRange("EL_drift_v>=0.");
+  EL_drift_vel_cmd.SetUnitCategory("drift velocity");
 
   msg_->DeclareProperty("elfield", elfield_,
                         "True if the EL field is on (full simulation), "
@@ -329,7 +347,7 @@ void Next100FieldCage::BuildActive()
   G4double global_active_zpos = active_zpos_ - GetCoordOrigin().z();
   field->SetCathodePosition(global_active_zpos + active_length_/2.);
   field->SetAnodePosition(global_active_zpos - active_length_/2.);
-  field->SetDriftVelocity(1. * mm/microsecond);
+  field->SetDriftVelocity(drift_v_);
   field->SetTransverseDiffusion(drift_transv_diff_);
   field->SetLongitudinalDiffusion(drift_long_diff_);
   field->SetLifetime(e_lifetime_);
@@ -461,6 +479,14 @@ void Next100FieldCage::BuildCathode()
                              G4ThreeVector(GetCoordOrigin().x(),
                                            GetCoordOrigin().y(),
                                            cathode_zpos_));
+
+  // Generate in a small 1 micron thick disk in front of cathode
+  cathode_surf_gen_ =
+    new CylinderPointSampler(0.0, cathode_int_diam_/2.,
+                             0.5*micrometer,0., twopi, nullptr,
+                             G4ThreeVector(GetCoordOrigin().x(),
+                                           GetCoordOrigin().y(),
+                                           cathode_grid_zpos - grid_thickn_ - 0.5*micrometer));
 
 
   /// Visibilities
@@ -721,7 +747,7 @@ void Next100FieldCage::BuildELRegion()
     G4double global_el_gap_zpos = el_gap_zpos_ - GetCoordOrigin().z();
     el_field->SetCathodePosition(global_el_gap_zpos + el_gap_length_/2. + grid_thickn_);
     el_field->SetAnodePosition  (global_el_gap_zpos - el_gap_length_/2. - grid_thickn_);
-    el_field->SetDriftVelocity(2.5 * mm/microsecond);
+    el_field->SetDriftVelocity(EL_drift_v_);
     el_field->SetTransverseDiffusion(ELtransv_diff_);
     el_field->SetLongitudinalDiffusion(ELlong_diff_);
     el_field->SetLightYield(XenonELLightYield(ELelectric_field_, pressure_));
@@ -1061,6 +1087,7 @@ Next100FieldCage::~Next100FieldCage()
   delete hdpe_gen_;
   delete ring_gen_;
   delete cathode_gen_;
+  delete cathode_surf_gen_;
   delete gate_gen_;
   delete anode_gen_;
   delete holder_gen_;
@@ -1089,6 +1116,10 @@ G4ThreeVector Next100FieldCage::GenerateVertex(const G4String& region) const
 
   else if (region == "CATHODE_RING") {
     vertex = cathode_gen_->GenerateVertex(VOLUME);
+  }
+
+  else if (region == "CATHODE_SURF"){
+    vertex = cathode_surf_gen_->GenerateVertex(VOLUME);
   }
 
   else if (region == "BUFFER") {
