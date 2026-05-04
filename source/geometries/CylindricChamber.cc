@@ -275,6 +275,7 @@ namespace nexus {
       fiber_length,       // Length
       false,               // Double cladding
       false,               // With coating
+      false,              //aluminised end 
       core_mat,           // Core material
       0,   // Coating material
       true                // Visibility

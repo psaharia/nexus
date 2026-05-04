@@ -75,7 +75,8 @@ void AnalysisSteppingAction::UserSteppingAction(const G4Step* step)
               //creatorProcess && creatorProcess->GetProcessName() == "initStep" && 
               sec_track->GetParentID()>1)
           {
-              fWlsReemissionCount++; // Increment the counter
+              //fWlsReemissionCount++; // Increment the counter
+              fWlsReemissionCount++;
           }
       }
   }

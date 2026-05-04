@@ -1,0 +1,11 @@
+## ----------------------------------------------------------------------------
+## nexus | LEDGenerator.mac
+##
+## Ancillary macro to define the parameters of the LED spectrum generator.
+##
+## The NEXT Collaboration
+## ----------------------------------------------------------------------------
+
+/Generator/LEDGenerator/region OUTSIDE
+/Generator/LEDGenerator/spectrum_file_ /Users/psaharia/Pokhee-IFIC/FibreAnal/FibreAnal/LED_spectrum.csv
+/Generator/LEDGenerator/nphotons 1
